@@ -2,37 +2,40 @@ import axios from 'axios';
 
 export const LOAD_FILM = "aadnbkanbakdT3Fjbnkj-LOAD_FILM-adjjrisNDDAVKADFKJKJ";
 export const LOAD_PEOPLE = "DDDDCSVS-LOAD_PEOPLE-SDFDSFDSFSDFS";
+export const LOAD_PEOPLE_ERROR = "akvnalkvnavlknalkbfnlkdfbn-LOAD_PEOPLE_ERROR-adkvjnavknakjan";
+export const LOAD_PEOPLE_SUCCESS = "aonlbknsbklnlbknblnbl-LOAD_PEOPLE_SUCCESS-aengjannvaknvadlk";
 
 export function peopleHasErrored(bool) {
     return {
-        type: 'PEOPLE_HAS_ERRORED',
-        hasErrored: bool
+        type: LOAD_PEOPLE_ERROR
     };
 }
 
 export function peopleIsLoading(bool) {
     return {
-        type: 'PEOPLE_IS_LOADING',
-        isLoading: bool
+        type:  LOAD_PEOPLE,
+        payload: bool
     };
 }
 
-export function peopleFetchDataSuccess(items) {
+export function peopleFetchDataSuccess(data) {
     return {
-        type: 'PEOPLE_FETCH_DATA_SUCCESS',
-        items
+        type: LOAD_PEOPLE_SUCCESS,
+        payload: data
     };
 }
+
 export function peopleFetchData() {
-    console.log('got here');
     return (dispatch, getState, url) => {
+        console.log("fetch date now...")
         dispatch(peopleIsLoading(true));
         axios.get(`${url}/people`)
         .then(response => {
-            console.log(response);
+            dispatch( peopleFetchDataSuccess(response.data));
+            console.log(response.data);
         })
 
-        
+
 
             //     dispatch(peopleIsLoading(false));
 
