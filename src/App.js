@@ -13,17 +13,15 @@ class App extends Component {
 
         <div className="row">
           <div className="small-10 small-centered columns text-center">
-
             <DisplayPeople/>
-
           </div>
         </div>
-
         {
           <div className="row">
             <div className="small-10 small-centered columns text-center">
 
-              {this.props.selectedPerson !== undefined && <DisplayFilm /> }
+              {this.props.selectedPerson !== undefined &&
+                (this.props.failureLoadingFilm ? <div className="padding-small margin-bottom-tiny text-white bg-alert">There was an issue loading Film Data</div> : <DisplayFilm />) }
             </div>
           </div>
         }
@@ -34,7 +32,10 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return{
-        selectedPerson: state.selectedPerson
+        selectedPerson: state.selectedPerson,
+        loadingPage: state.loadingPeople,
+        failureLoadingFilm: state.failureLoadingFilm,
+        failureLoadingPeople: state.failureLoadingPeople
     }
 }
 

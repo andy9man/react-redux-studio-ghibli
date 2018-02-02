@@ -45,11 +45,15 @@ export const reducer = ( state=initialState, action ) => {
             console.log('People Load Successful... addtion results to state');
             console.log(people);
             return {...state, people: people, loadingPeople: false};
+        case LOAD_PEOPLE_ERROR:
+            return {...state, loadingPeople: false, failureLoadingPeople: true};
 
         case LOAD_FILM:
             return {...state, loadingFilms: action.payload};
         case LOAD_FILM_SUCCESS:
-            return {...state, films: state.films.concat([ new Film(action.payload)]), loadingFilms: false}
+            return {...state, films: state.films.concat([ new Film(action.payload)]), loadingFilms: false};
+        case LOAD_FILM_ERROR:
+            return {...state, loadingFilms: false, failedToLoadFilms: true};
 
         case SELECTED_PERSON:
             return {...state, films: [], selectedPerson: action.payload}

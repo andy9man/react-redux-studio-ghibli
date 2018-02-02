@@ -17,8 +17,8 @@ class DisplayPeople extends Component {
                 console.log(films);
                 films.map( film => {
                     const filter = film.slice(film.indexOf(".com/")+5);
-                    //console.log(film.split("https://ghibliapi.herokuapp.com/", 1));
                     fetchData(filter, 'film');
+                    return undefined;
                 })
             }
         }
@@ -31,16 +31,18 @@ class DisplayPeople extends Component {
     render() {
         return (
         <div>
-            {(!this.props.failureLoadingPeople && !this.props.loadingPeople) && this.props.people.map( (actor, index) => (
-                <img
-                    key={index}
-                    onClick={() => {
-                        this.props.selectPerson(index);
-                        this.getMovieData();
-                    }}
-                    src={actor.gender.toLowerCase() === 'male' ? maleAvatar : femaleAvatar} alt={actor.name}
-                />
-            ))}
+            {this.props.failureLoadingPeople ? <div className="padding-small margin-bottom-tiny text-white bg-alert">There was an issue loading people</div> :
+                (this.props.loadingPeople ? <div className="padding-top-xlarge"><span className="loading-indicator xlarge"></span></div> :
+                    this.props.people.map( (actor, index) => (
+                    <img
+                        key={index}
+                        onClick={() => {
+                            this.props.selectPerson(index);
+                            this.getMovieData();
+                        }}
+                        src={actor.gender.toLowerCase() === 'male' ? maleAvatar : femaleAvatar} alt={actor.name}
+                    />
+                    )))}
         </div>
         );
     }
