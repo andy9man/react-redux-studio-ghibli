@@ -1,34 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { peopleFetchData } from './store/action.js';
+import { fetchData } from './store/action.js';
 import femaleAvatar from './assets/Female-Avatar.png';
 import maleAvatar from './assets/Male-Avatar.png';
+import {SELECTED_PERSON} from './store/action';
 
 
 class DisplayPeople extends Component {
     componentDidMount() {
-        this.props.fetchData();
+        this.props.fetchData('people', 'people');
     }
 
     render() {
     return (
-      <div className="App">
-        {this.props.people.map( (actor, index) => (
-            <img key={index} src={actor.gender.toLowerCase() === 'male' ? maleAvatar : femaleAvatar} alt={actor.name} />
+      <div>
+        {(!this.props.failureLoadingPeople && !this.props.loadingPeople) && this.props.people.map( (actor, index) => (
+            <img
+                key={index}
+                onClick={() => this.props.selectedPerson(index)}
+                src={actor.gender.toLowerCase() === 'male' ? maleAvatar : femaleAvatar} alt={actor.name}
+            />
         ))}
       </div>
     );
   }
 }
+
 const mapStateToProps = state => {
     return{
         loadingPeople: state.loadingPeople,
+        failureLoadingPeople: state.failureLoadingPeople,
         people: state.people
     }
 }
+
 const mapDispatchToProps = dispatch => {
     return{
-        fetchData: () => dispatch(peopleFetchData())
+        fetchData(filter, type) {
+            dispatch(fetchData(filter, type))
+        },
+        selectedPerson(person) {
+            dispatch( {type: SELECTED_PERSON, payload: person} )
+        }
     }
 }
 
