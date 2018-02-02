@@ -44,12 +44,12 @@ export const reducer = ( state=initialState, action ) => {
             const people = action.payload.map( actor => new People(actor));
             console.log('People Load Successful... addtion results to state');
             console.log(people);
-            return {...state, people: people};
+            return {...state, people: people, loadingPeople: false};
 
         case LOAD_FILM:
             return {...state, loadingFilms: action.payload};
         case LOAD_FILM_SUCCESS:
-            return {...state, films: state.films.concat([ new Film(action.payload)])}
+            return {...state, films: state.films.concat([ new Film(action.payload)]), loadingFilms: false}
 
         case SELECTED_PERSON:
             return {...state, films: [], selectedPerson: action.payload}

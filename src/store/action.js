@@ -58,9 +58,7 @@ export function fetchData(filter, type) {
                 console.log("Successfully received response...");
                 console.log(response);
                 type === 'people' && dispatch( peopleDataSuccess(response.data) );
-                type === 'film' && dispatch( filmDataSuccess(response.data) );
-                type === 'people' && dispatch( peopleIsLoading(false) );
-                type === 'film' && dispatch( filmIsLoading(false) );
+                type === 'film' && setTimeout( () => {dispatch( filmDataSuccess(response.data) )}, 2000);
             })
             .catch( error => {
                 if (error.response) {

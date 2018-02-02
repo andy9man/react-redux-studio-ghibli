@@ -20,10 +20,10 @@ class App extends Component {
         </div>
 
         {
-          this.props.selectedPerson !== undefined &&
           <div className="row">
             <div className="small-10 small-centered columns text-center">
-              <DisplayFilm />
+
+              {this.props.selectedPerson !== undefined && <DisplayFilm /> }
             </div>
           </div>
         }
